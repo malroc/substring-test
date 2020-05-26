@@ -30,8 +30,8 @@ gem "bootsnap", ">= 1.4.2", require: false
 # A flexible tool to use React with Rails
 gem "react-rails", "~> 2.6.1"
 
-# A flexible authentication solution for Rails based on Warden
-gem "devise", "~> 4.7.1"
+# A set of responders modules to dry up your Rails app.
+gem "responders", "~> 3.0.0"
 
 group :development do
   gem "web-console", ">= 3.3.0"
@@ -40,6 +40,9 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
 end
 
-group :development, :test do
+group :test do
   gem "rspec-rails", "~> 4.0.0"
+  gem "shoulda-matchers", "~> 4.3.0"
+  gem "factory_bot_rails", "~> 5.2.0"
+  gem "ffaker", "~> 2.15.0"
 end
