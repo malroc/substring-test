@@ -28,6 +28,6 @@ The app is expected to work on Mac OS X and Linux, not tested on Windows.
 
 ## Hosted version
 
-A working version of the app is hosted on Heroku: http://substring-test.herokuapp.com/sign_in
+A working version of the app is hosted on Heroku: http://substring-test.herokuapp.com/
 
 Please note that it may take 30 seconds before it loads which is a limitation of a free Heroku plan.
