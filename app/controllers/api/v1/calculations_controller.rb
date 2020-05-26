@@ -27,7 +27,7 @@ class Api::V1::CalculationsController < Api::V1::Controller
   protected
 
   def set_calculation
-    @calculation = current_user.calculations.find(id: params[:id])
+    @calculation = current_user.calculations.find(params[:id])
   end
 
   def authorize!

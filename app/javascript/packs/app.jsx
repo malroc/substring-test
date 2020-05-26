@@ -2,13 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import CalculationsScreen from '../components/CalculationsScreen'
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-      </Switch>
-    </BrowserRouter>
+    <div className="container">
+      <BrowserRouter>
+        <Switch>
+          <Route path="/">
+            <CalculationsScreen />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </div>
   )
 }
 
