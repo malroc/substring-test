@@ -1,24 +1,27 @@
-# README
+# Finding non-continuous substring
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Both front-end and back-end apps are located in the same repo.
 
-Things you may want to cover:
+The app is expected to work on Mac OS X and Linux, not tested on Windows.
 
-* Ruby version
+## Local environment setup
 
-* System dependencies
+1. Clone this repo: `git clone git@github.com:malroc/substring-test.git`
 
-* Configuration
+2. Go to the repo dir `cd substring-test`
 
-* Database creation
+3. Make sure that you are running a PostgreSQL server
 
-* Database initialization
+4. Edit `config/database.yml` if needed (unnecessary in most cases, should normally work out-of-the-box)
 
-* How to run the test suite
+5. Setup dev/test database: `rails db:{create,migrate}`
 
-* Services (job queues, cache servers, search engines, etc.)
+## Running server
 
-* Deployment instructions
+1. Execute `rails s`
 
-* ...
+2. Go to http://localhost:3000 in browser window
+
+## Running tests
+
+1. Execute `rspec`
