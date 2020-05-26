@@ -2,26 +2,35 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 
-class SignInScreen extends React.Component {
-  sessionsUrl = '/api/v1/sessions'
+class SignUpScreen extends React.Component {
+  usersUrl = '/api/v1/users'
   requestHeaders = {'Content-Type': 'application/json'}
 
   constructor(props) {
     super(props)
 
-    this.state = {email: '', password: '', emailErrors: '', passwordErrors: ''}
+    this.state = {
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+      emailErrors: '',
+      passwordErrors: '',
+      passwordConfirmationErrors: ''
+    }
   }
 
-  async createSession() {
+  async createUser() {
     let response =
       await fetch(
-        this.sessionsUrl,
+        this.usersUrl,
         {
           method: 'POST',
           headers: this.requestHeaders,
-          body: JSON.stringify(
-            {'email': this.state.email, 'password': this.state.password}
-          )
+          body: JSON.stringify({
+            'email': this.state.email,
+            'password': this.state.password,
+            'password_confirmation': this.state.passwordConfirmation
+          })
         }
       )
 
@@ -33,8 +42,11 @@ class SignInScreen extends React.Component {
 
       this.setState({
         password: '',
+        passwordConfirmation: '',
         emailErrors: (errors['email'] || []).join(', '),
-        passwordErrors: (errors['password'] || []).join(', ')
+        passwordErrors: (errors['password'] || []).join(', '),
+        passwordConfirmationErrors:
+          (errors['password_confirmation'] || []).join(', ')
       })
     }
   }
@@ -42,7 +54,7 @@ class SignInScreen extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <h1>Sign In</h1>
+        <h1>Sign Up</h1>
         <div className="input-group mb-3">
           <input
             placeholder="Email"
@@ -76,23 +88,42 @@ class SignInScreen extends React.Component {
           ) : ''}
         </div>
         <div className="input-group mb-3">
+          <input
+            placeholder="Password confirmation"
+            type="password"
+            className={
+              'form-control ' +
+                (!!this.state.passwordConfirmationErrors ? 'is-invalid' : '')
+            }
+            value={this.state.passwordConfirmation}
+            onChange={
+              (evt) => this.setState({passwordConfirmation: evt.target.value})
+            }
+          />
+          {!!this.state.passwordConfirmationErrors ? (
+            <div className="invalid-feedback">
+              {this.state.passwordConfirmationErrors}
+            </div>
+          ) : ''}
+        </div>
+        <div className="input-group mb-3">
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-success"
             onClick={
-              () => this.createSession()
+              () => this.createUser()
             }
           >
-            <i className="fa fa-sign-in" />
+            <i className="fa fa-user-plus" />
             &nbsp;
-            Sign in
+            Sign up
           </button>
           <span className="mt-2">
             &nbsp;
             or
             &nbsp;
-            <Link to="/sign_up">
-              Sign up
+            <Link to="/sign_in">
+              Sign in
             </Link>
           </span>
         </div>
@@ -101,4 +132,4 @@ class SignInScreen extends React.Component {
   }
 }
 
-export default withRouter(SignInScreen)
+export default withRouter(SignUpScreen)

@@ -4,7 +4,9 @@ class Api::V1::UsersController < Api::V1::Controller
   def create
     @user = User.create(user_params)
 
-    respond_with @user, location: nil
+    session[:current_user_id] = @user.id if @user.errors.blank?
+
+    respond_with @user, location: nil, status: :created
   end
 
   protected

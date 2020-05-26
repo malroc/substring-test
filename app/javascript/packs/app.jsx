@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import CalculationsScreen from '../components/CalculationsScreen'
 import SignInScreen from '../components/SignInScreen'
+import SignUpScreen from '../components/SignUpScreen'
 
 const App = () => {
   return (
@@ -15,6 +16,9 @@ const App = () => {
           </Route>
           <Route exact path="/sign_in">
             <SignInScreen />
+          </Route>
+          <Route exact path="/sign_up">
+            <SignUpScreen />
           </Route>
         </Switch>
       </BrowserRouter>
