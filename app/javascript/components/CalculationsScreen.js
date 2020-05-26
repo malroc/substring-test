@@ -1,12 +1,14 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react'
+import { withRouter } from 'react-router'
 
 class CalculationsScreen extends React.Component {
-  baseUrl = '/api/v1/calculations'
+  calculationsUrl = '/api/v1/calculations'
+  sessionsUrl = '/api/v1/sessions'
   requestHeaders = {'Content-Type': 'application/json'}
 
   constructor(props) {
     super(props)
+
     this.state = {calculations: [], newA: '', newB: ''}
   }
 
@@ -16,37 +18,45 @@ class CalculationsScreen extends React.Component {
 
   async fetchCalculations() {
     let response =
-      await fetch(this.baseUrl, {headers: this.requestHeaders})
+      await fetch(this.calculationsUrl, {headers: this.requestHeaders})
 
     if (response.status == 200) {
       let calculations = await response.json()
       this.setState({calculations: calculations})
     } else {
+      this.props.history.push('/sign_in')
     }
   }
 
   async destroyCalculation(calculationId) {
-    await
-      fetch(
-        `${this.baseUrl}/${calculationId}`,
-        {method: 'DELETE', headers: this.requestHeaders}
-      )
+    await fetch(
+      `${this.calculationsUrl}/${calculationId}`,
+      {method: 'DELETE', headers: this.requestHeaders}
+    )
 
     this.fetchCalculations()
   }
 
   async createCalculation() {
-    await
-      fetch(
-        this.baseUrl,
-        {
-          method: 'POST',
-          headers: this.requestHeaders,
-          body: JSON.stringify({'a': this.state.newA, 'b': this.state.newB})
-        }
-      )
+    await fetch(
+      this.calculationsUrl,
+      {
+        method: 'POST',
+        headers: this.requestHeaders,
+        body: JSON.stringify({'a': this.state.newA, 'b': this.state.newB})
+      }
+    )
 
     this.setState({newA: '', newB: ''})
+
+    this.fetchCalculations()
+  }
+
+  async destroyCurrentSession() {
+    await fetch(
+      `${this.sessionsUrl}/current`,
+      {method: 'DELETE', headers: this.requestHeaders}
+    )
 
     this.fetchCalculations()
   }
@@ -54,6 +64,15 @@ class CalculationsScreen extends React.Component {
   render () {
     return (
       <React.Fragment>
+        <button
+          type="button"
+          className="btn btn-info float-right mt-2"
+          onClick={() => this.destroyCurrentSession()}
+        >
+          <i className="fa fa-sign-out" />
+          &nbsp;
+          Sign out
+        </button>
         <h1>Calculations</h1>
         <table className="table">
           <thead>
@@ -85,10 +104,10 @@ class CalculationsScreen extends React.Component {
                 <button
                   type="button"
                   className="btn btn-success"
-                  onClick={
-                    () => this.createCalculation()
-                  }
+                  onClick={() => this.createCalculation()}
                 >
+                  <i className="fa fa-calculator" />
+                  &nbsp;
                   Create calculation
                 </button>
               </td>
@@ -104,10 +123,10 @@ class CalculationsScreen extends React.Component {
                   <button
                     type="button"
                     className="btn btn-danger"
-                    onClick={
-                      () => this.destroyCalculation(calculation['id'])
-                    }
+                    onClick={() => this.destroyCalculation(calculation['id'])}
                   >
+                    <i className="fa fa-trash-o" />
+                    &nbsp;
                     Delete calculation
                   </button>
                 </td>
@@ -120,4 +139,4 @@ class CalculationsScreen extends React.Component {
   }
 }
 
-export default CalculationsScreen
+export default withRouter(CalculationsScreen)

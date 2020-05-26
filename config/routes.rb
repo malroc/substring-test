@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   end
 
   get "", to: "pages#home"
-  get "users/new", to: "pages#home"
-  get "sessions/new", to: "pages#home"
-  get "calculations", to: "pages#home"
+  get "sign_up", to: "pages#home"
+  get "sign_in", to: "pages#home"
 end
